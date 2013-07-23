@@ -1,0 +1,108 @@
+= Asciidoc with custom dblatex configuration
+John Doe <user@domain.com>
+0.2, July 2013
+:revisionhistory:
+:toc:
+:numbered:
+
+== Overview ==
+
+This is an example of some possible customizations for asciidoc dblatex backend. It features:
+
+Letter paper size::
+  How to override the default A4 paper size in +dblatex+.
+
+Custom cover page::
+  Cover page with company logo and custom layout.
+
+Custom fonts::
+  Such as using Charter as roman font and +Inconsolata+ as monospace font.
+
+White background in code listings::
+  Overriding default +dblatex+ color/grey background.
+
+Overrides and configurations are made via custom +asciidoc-dblatex-custom.sty+ style file. Take a look into supplied +Makefile+ for +a2x+ command example.
+
+== Letter paper size
+
+Paper size is configured by adding +geometry+ package to +asciidoc-dblatex-custom.sty+:
+
+.Changing paper size
+----
+ 7 % this will set letterpaper, because docbook.sty honors page layout
+ 8 % made by geometry package
+ 9 \usepackage[letterpaper,total={7.25in,9.25in}, top=1in]{geometry}  <1>
+10
+11 %% Just use the original package and pass the options.
+12 \RequirePackageWithOptions{docbook}
+----
+<1> Using +geometry+ package with +letterpaper+ configuration
+
+== Custom cover page
+
+
+.Create the blue ribbon command
+----
+14 \newlength\mylength
+15 \def\blueribbon{
+16   \setlength\mylength{0.3\paperheight}
+17  \AddToShipoutPicture*{
+18     \put(0,\LenToUnit{\mylength}){%
+19       {\color{blue}\rule{\paperwidth}{1cm}}}
+20   }
+21 }
+----
+
+.Override dblatex's +\DBKcover+ macro
+----
+23 % custom cover page
+24 \def\DBKcover{
+25   \ifthenelse{\equal{\DBKedition}{}}{\def\edhead{}}{\def\edhead{Ed. \DBKedition}}
+26   \thispagestyle{empty}
+27   \begin{flushright}
+28   \includegraphics[width=0.2\textwidth]{logo} \\  <1>
+29   \vspace*{1in}
+30   \bfseries
+31   \sffamily
+32   {\Huge \DBKtitle \\[1ex]\large ~~~ \\}          <2>
+33   \vspace*{2.1in}
+34   {\color{blue} \Huge ~~~ \\ \huge ~~~ \\}
+35   \vspace*{2.1in}
+36   {\Large\DBKdate \\}                             <3>
+37   \end{flushright}
+38   \vfill
+39   \begin{center}{\Large \bfseries \sffamily Acme Corp}\end{center}
+40   \blueribbon                                     <4>
+41 }
+----
+<1> Insert logo
+<2> This is how we obtain document title
+<3> Document date
+<4> Invoke +\blueribbon+ command to draw ribbon
+
+== Custom fonts
+
+Just including two additional packages to override default choices of roman and monospaced fonts in dblatex:
+
+.Setting fonts:
+----
+43 % use different charter and inconsolata roman and typewriter fonts
+44 \usepackage{charter}
+45 \usepackage{inconsolata}
+----
+
+== Customizing code listings
+
+----
+47 % re-set the listing environment, because we changed tt font and we
+48 % don't want colored background
+49 \lstset{%
+50     basicstyle=\ttfamily\small, %  <1>
+51     backgroundcolor={}%            <2>
+52 }
+----
+<1> Use small font size
+<2> No background color
+
+
+// vim: set syntax=asciidoc:

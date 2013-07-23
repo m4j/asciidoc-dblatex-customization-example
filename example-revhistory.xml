@@ -1,0 +1,20 @@
+<revhistory>
+  <revision>
+    <revnumber>0.2</revnumber>
+    <date>July 2013</date>
+    <authorinitials>JD</authorinitials>
+    <revremark>
+      Added four new sections with details on changing page size, cover page, fonts and source code listings configuration.
+    </revremark>
+  </revision>
+
+  <revision>
+    <revnumber>0.1</revnumber>
+    <date>October 2012</date>
+    <authorinitials>JD</authorinitials>
+    <revremark>
+      Initial version with overview
+    </revremark>
+  </revision>
+
+</revhistory>
