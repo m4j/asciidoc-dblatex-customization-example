@@ -3,7 +3,8 @@ ASCIIDOC=asciidoc
 ASCIIDOC_DBLATEX_STY=asciidoc-dblatex-custom.sty
 ASCIIDOC_OPTS=-v
 DBLATEX_OPTS=-P doc.publisher.show=0 -s $(ASCIIDOC_DBLATEX_STY)
-XML_CATALOG=docbook-catalog/catalog.xml
+PWD=$(shell pwd)
+XML_CATALOG=$(PWD)/docbook-catalog/catalog.xml
 
 .PHONY: clean html xml pdf
 

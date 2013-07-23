@@ -14,3 +14,5 @@ Overrides and configurations are placed into custom
 for `a2x` command example. Run `make clean pdf` to build PDF from asciidoc
 source `example.txt`. The output should look like `output/example.pdf`.
 
+Tested on OS X and Ubuntu with asciidoc v8.6.8, TexLive 2012 and dblatex v0.3.4.
+
